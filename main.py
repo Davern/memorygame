@@ -53,7 +53,6 @@ class Game:
                 image = self.images[imageIndex]
                 self.images.remove(image)
                 
-                print(len(self.images))
                 tile = Tile(tilePos,image,surface)
 
                 rows.append(tile)
@@ -67,11 +66,14 @@ class Game:
         
         pygame.display.flip()
 
-    def handleMouseClick(self):
-        pass
+    def handleMouseClick(self, mousePos):
+        for row in self.board:
+            for tile in row:
+                tile.select(mousePos)
 
-    def checkGameStatus(self):
-        pass
+    def gameUpdate(self):
+        if not self.gameOver:
+            pygame.draw.rect(self.surface, pygame.Color('Black'), (self.surface.get_width() - 50, 0, 100, 100))
 
 def main():
     global size
@@ -81,28 +83,12 @@ def main():
     pygame.display.set_caption('Memory Challenge')
     flag = True
     images = []
-    apple_image = pygame.image.load('apple.png')
-    orange_image = pygame.image.load('orange.png')
-    banana_image = pygame.image.load('banana.png')
-    grape_image = pygame.image.load('grape.png')
-    images.append(apple_image)
-    images.append(apple_image)
-    images.append(orange_image)
-    images.append(orange_image)
-    images.append(banana_image)
-    images.append(banana_image)
-    images.append(grape_image)
-    images.append(grape_image)
-    images.append(apple_image)
-    images.append(apple_image)
-    images.append(orange_image)
-    images.append(orange_image)
-    images.append(banana_image)
-    images.append(banana_image)
-    images.append(grape_image)
-    images.append(grape_image)
+    imageTitles = ["apple.png", "orange.png", "banana.png", "grape.png", "peach.png", "cherry.png", "blueberry.png", "raspberry.png"]
+    for title in imageTitles:
+        image = pygame.image.load(title)
+        images.append(image)
+        images.append(image)
 
-    print(len(images))
 
     clock = pygame.time.Clock()
 
@@ -118,7 +104,10 @@ def main():
             if event.type == pygame.QUIT:
                 pygame.quit()
                 sys.exit()
+            if event.type == pygame.MOUSEBUTTONUP:
+                instance.handleMouseClick(event.pos)
 
+        instance.gameUpdate()
         pygame.display.update()
 
 main()
