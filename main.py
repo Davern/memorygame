@@ -1,5 +1,5 @@
 import sys
-from random import *
+import random
 import pygame
 
 
@@ -49,7 +49,7 @@ class Game:
                 y = ((row + 1) * Game.gap) + (row * tileHeight)
                 tilePos = [x,y,tileWidth,tileHeight]
 
-                imageIndex = randrange(0, len(self.images))
+                imageIndex = random.randrange(0, len(self.images))
                 image = self.images[imageIndex]
                 self.images.remove(image)
                 
