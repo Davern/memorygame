@@ -100,7 +100,7 @@ class Game:
                 main()
             else: 
                 pygame.quit()
-                sys.quit()
+                sys.exit()
             
             
 
